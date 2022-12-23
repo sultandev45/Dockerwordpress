@@ -1,0 +1,26 @@
+version: "3" 
+services:
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: MyWordPressDatabase
+      MYSQL_USER: Sultan
+      MYSQL_PASSWORD: root
+  wordpress:
+    depends_on:
+      - db
+    image: wordpress:latest
+    restart: always
+    ports:
+      - "80:80"
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: Sultan
+      WORDPRESS_DB_PASSWORD: root
+      WORDPRESS_DB_NAME: MyWordPressDatabase
+    volumes:
+      ["./:/var/www/html"]
+volumes:
+  mysql: {}
